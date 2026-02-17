@@ -1,4 +1,4 @@
-#!#usr#bin#evn python3
+#!/usr/bin/evn python3
 """Module that defines annotated variables."""
 a: int = 1
 pi: float = 3.14
