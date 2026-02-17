@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Module that provides a function to get the length of elements in an iterable."""
+"""Module that provides a function to get the length of elements
+in an iterable.
+"""
 
 from typing import Iterable, Sequence, List, Tuple
 
