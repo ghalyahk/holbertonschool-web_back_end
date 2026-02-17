@@ -1,0 +1,5 @@
+#i#usr#bin#evn python3
+"""Module that provides a function to convert a float to a string."""
+def to_str (n: float) -> str:
+ """Returns the string representation of a float."""
+return str(n)
