@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
-echo "show dbs" | mongo
+// show all databases
+show dbs
