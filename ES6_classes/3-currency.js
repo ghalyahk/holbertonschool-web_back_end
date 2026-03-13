@@ -1,34 +1,29 @@
-lass Currency {
+export default class Currency {
   constructor(code, name) {
-    // Almacena los atributos en versiones con guion bajo
     this._code = code;
     this._name = name;
   }
 
-  // Implementa un getter para el atributo 'code'
+  // Getter y Setter para 'code'
   get code() {
     return this._code;
   }
 
-  // Implementa un setter para el atributo 'code'
-  set code(newCode) {
-    this._code = newCode;
+  set code(value) {
+    this._code = value;
   }
 
-  // Implementa un getter para el atributo 'name'
+  // Getter y Setter para 'name'
   get name() {
     return this._name;
   }
 
-  // Implementa un setter para el atributo 'name'
-  set name(newName) {
-    this._name = newName;
+  set name(value) {
+    this._name = value;
   }
 
-  // Implementa el método 'displayFullCurrency'
+  // Método displayFullCurrency
   displayFullCurrency() {
     return `${this._name} (${this._code})`;
   }
 }
-
-export default Currency;
