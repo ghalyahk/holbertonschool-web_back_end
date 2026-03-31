@@ -1,6 +1,6 @@
 export default function cleanSet(set, startString) {
-  // If startString is not provided or empty, return empty string
-  if (!startString) return '';
+  // Check if startString is a non-empty string
+  if (typeof startString !== 'string' || startString.length === 0) return '';
 
   // Convert set to array and filter values that start with startString
   const filtered = [...set].filter((value) => value.startsWith(startString));
