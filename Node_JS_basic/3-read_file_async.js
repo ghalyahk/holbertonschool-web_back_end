@@ -8,29 +8,42 @@ function countStudents(path) {
         return;
       }
 
-      const lines = data.split('\n');
-      const rows = lines.slice(1).filter((row) => row.trim() !== '' && row.split(',').length === 4);
+      const lines = data
+        .split('\n')
+        .filter((line) => line.trim() !== '');
+
+      const students = lines.slice(1);
 
       const fields = {};
-      rows.forEach((row) => {
-        const columns = row.split(',');
-        const firstName = columns[0].trim();
-        const field = columns[3].trim();
+
+      students.forEach((line) => {
+        const parts = line.split(',');
+
+        if (parts.length < 4) return;
+
+        const firstname = parts[0].trim();
+        const field = parts[3].trim();
 
         if (!fields[field]) {
           fields[field] = [];
         }
-        fields[field].push(firstName);
+
+        fields[field].push(firstname);
       });
 
-      const output = [];
-      output.push(`Number of students: ${rows.length}`);
-      for (const [field, students] of Object.entries(fields)) {
-        output.push(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
-      }
+      const fieldNames = Object.keys(fields)
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
-      console.log(output.join('\n'));
-      resolve(output.join('\n'));
+      console.log(`Number of students: ${students.length}`);
+
+      fieldNames.forEach((field) => {
+        const list = fields[field];
+        console.log(
+          `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`
+        );
+      });
+
+      resolve();
     });
   });
 }
