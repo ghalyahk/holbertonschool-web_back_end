@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const app = express();
 
-// function to read students (نفس فكرة السؤال 3)
 function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
@@ -15,8 +14,7 @@ function countStudents(path) {
       const lines = data.split('\n').filter((line) => line.trim() !== '');
       const students = lines.slice(1);
 
-      const result = [];
-      result.push(`Number of students: ${students.length}`);
+      console.log(`Number of students: ${students.length}`);
 
       const fields = {};
 
@@ -33,35 +31,35 @@ function countStudents(path) {
       });
 
       Object.keys(fields).forEach((field) => {
-        result.push(
+        console.log(
           `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`
         );
       });
 
-      resolve(result.join('\n'));
+      resolve();
     });
   });
 }
 
-// route /
+// /
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-// route /students
-app.get('/students', async (req, res) => {
+// /students
+app.get('/students', (req, res) => {
   const db = process.argv[2];
 
-  let response = 'This is the list of our students';
+  res.write('This is the list of our students\n');
 
-  try {
-    const data = await countStudents(db);
-    response += `\n${data}`;
-  } catch (err) {
-    response += `\n${err.message}`;
-  }
-
-  res.send(response);
+  countStudents(db)
+    .then(() => {
+      res.end();
+    })
+    .catch((err) => {
+      res.write(`${err.message}`);
+      res.end();
+    });
 });
 
 app.listen(1245);
