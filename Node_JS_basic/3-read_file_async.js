@@ -2,7 +2,7 @@ const fs = require('fs');
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf-8', (err, data) => {
+    fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(new Error('Cannot load the database'));
         return;
@@ -19,10 +19,10 @@ function countStudents(path) {
       students.forEach((line) => {
         const parts = line.split(',');
 
-        if (parts.length < 4) return;
+        if (parts.length !== 4) return;
 
-        const firstname = parts[0].trim();
-        const field = parts[3].trim();
+        const firstname = parts[0];
+        const field = parts[3];
 
         if (!fields[field]) {
           fields[field] = [];
@@ -31,19 +31,19 @@ function countStudents(path) {
         fields[field].push(firstname);
       });
 
-      const fieldNames = Object.keys(fields)
+      const fieldKeys = Object.keys(fields)
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
       console.log(`Number of students: ${students.length}`);
 
-      fieldNames.forEach((field) => {
+      for (const field of fieldKeys) {
         const list = fields[field];
         console.log(
           `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`
         );
-      });
+      }
 
-      resolve();
+      resolve(); // مهم: بدون string
     });
   });
 }
