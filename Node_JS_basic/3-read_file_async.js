@@ -8,32 +8,29 @@ function countStudents(path) {
         return;
       }
 
-      const lines = data.split('\n').filter((line) => line.trim() !== '');
-      const students = lines.slice(1); // remove header
-
-      console.log(`Number of students: ${students.length}`);
+      const lines = data.split('\n');
+      const rows = lines.slice(1).filter((row) => row.trim() !== '' && row.split(',').length === 4);
 
       const fields = {};
-
-      students.forEach((line) => {
-        const parts = line.split(',');
-        const firstname = parts[0];
-        const field = parts[3];
+      rows.forEach((row) => {
+        const columns = row.split(',');
+        const firstName = columns[0].trim();
+        const field = columns[3].trim();
 
         if (!fields[field]) {
           fields[field] = [];
         }
-
-        fields[field].push(firstname);
+        fields[field].push(firstName);
       });
 
-      Object.keys(fields).forEach((field) => {
-        console.log(
-          `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`
-        );
-      });
+      const output = [];
+      output.push(`Number of students: ${rows.length}`);
+      for (const [field, students] of Object.entries(fields)) {
+        output.push(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
+      }
 
-      resolve();
+      console.log(output.join('\n'));
+      resolve(output.join('\n'));
     });
   });
 }
